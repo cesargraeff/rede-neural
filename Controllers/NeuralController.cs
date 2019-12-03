@@ -1,3 +1,6 @@
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using neuralnetwork.Core;
@@ -9,8 +12,66 @@ namespace neuralnetwork.Controllers
     [ApiController]
     public class NeuralController : ControllerBase
     {
+
         [HttpPost("train")]
-        public void Get(
+        public void Train(
+            [FromBody] InputModel[] dataset,
+            [FromQuery] int iteracoes,
+            [FromQuery] int intermediaria,
+            [FromQuery] double aprendizado,
+            [FromQuery] double momentum
+        )
+        {
+
+            int nData = dataset.Length;
+
+            if (nData == 0)
+            {
+                throw new Exception("Informe no minimo um cenário de teste!");
+            }
+
+            int nInput = dataset[0].input.Length;
+            int nOutput = dataset[0].expected.Length;
+
+
+            var rn = new NeuralNetwork(nInput, intermediaria, nOutput, iteracoes, 0.01, aprendizado, momentum);
+
+
+            var input = new double[nData][];
+            var expected = new double[nData][];
+
+            for (int i = 0; i < nData; i++)
+            {
+                input[i] = new double[nInput];
+                char[] charsI = new String(dataset[i].input).ToCharArray();
+                for (int j = 0; j < nInput; j++)
+                {
+                    input[i][j] = Convert.ToDouble(charsI[j] - 48);
+                }
+
+                expected[i] = new double[nOutput];
+                char[] charsO = new String(dataset[i].expected).ToCharArray();
+                for (int j = 0; j < nOutput; j++)
+                {
+                    expected[i][j] = Convert.ToDouble(charsO[j] - 48);
+                }
+            }
+
+            rn.train(input, expected);
+
+
+            string file = System.IO.Path.GetFullPath("train.obj");
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(file, FileMode.Create, FileAccess.Write);
+            formatter.Serialize(stream, rn);
+            stream.Close();
+            
+        }
+
+
+
+        [HttpPost("test")]
+        public void Test(
             [FromBody] InputModel[] dataset
         )
         {
@@ -45,8 +106,13 @@ namespace neuralnetwork.Controllers
                 }
             }
 
-            var rn = new NeuralNetwork(nInput, 40, nOutput, 1000, 0.01, 0.3, 1);
-            rn.train(input, expected);
+
+            string file = System.IO.Path.GetFullPath("train.obj");
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(file, FileMode.Open, FileAccess.Read);
+            var rn = (NeuralNetwork)formatter.Deserialize(stream);
+            stream.Close();
+
 
             for (int i = 0; i < nData; i++)
             {
@@ -71,7 +137,6 @@ namespace neuralnetwork.Controllers
                 Console.WriteLine();
                 Console.WriteLine();
             }
-
         }
 
 

@@ -4,6 +4,7 @@ using System;
 namespace neuralnetwork.Core
 {
 
+    [Serializable]
     class NeuralNetwork
     {
 

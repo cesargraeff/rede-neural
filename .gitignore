@@ -1,3 +1,9 @@
+# NPM
+node_modules/
+
+# TRAIN FILE
+train.obj
+
 # .NET Core
 *.swp
 *.*~
