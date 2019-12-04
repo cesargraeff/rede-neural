@@ -72,7 +72,7 @@ namespace neuralnetwork.Core
                 this.hiddenWeigth[i] = new double[nInput];
                 for (int j = 0; j < nInput; j++)
                 {
-                    this.hiddenWeigth[i][j] = rand.NextDouble() / 2;
+                    this.hiddenWeigth[i][j] = rand.NextDouble() / 5;
                 }
             }
 
@@ -83,7 +83,7 @@ namespace neuralnetwork.Core
                 this.outputWeigth[i] = new double[nHidden];
                 for (int j = 0; j < nHidden; j++)
                 {
-                    this.outputWeigth[i][j] = rand.NextDouble() / 2;
+                    this.outputWeigth[i][j] = rand.NextDouble() / 5;
                 }
             }
 

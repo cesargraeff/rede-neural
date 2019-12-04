@@ -42,15 +42,15 @@
                         <b>Treinamento</b>
                     </div>
                     <div class="card-body">
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col">
                                 <p>Arquivo de Treinamento</p>
-                                <label for="file-train" style="width: 100%;">
+                                <label for="train-file" style="width: 100%;">
                                     <a class="btn btn-success btn-block text-white">
                                         SELECIONAR ARQUIVO
                                     </a>
                                 </label>
-                                <input style="visibility: hidden;" type="file" name="file" id="file-train" accept="*.json" />
+                                <input style="display:none;" type="file" name="file" id="train-file" accept="*.json" />
                             </div>
                         </div>
                         <form id="form">
@@ -58,35 +58,35 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="intermediaria">Camada Intermediaria</label>
-                                        <input class="form-control text-center" type="text" name="intermediaria" id="intermediaria" value="40">
+                                        <input class="form-control text-center" type="text" name="intermediaria" id="intermediaria" value="20">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="aprendizado">Taxa de Aprendizagem</label>
-                                        <input class="form-control text-center" type="number" name="aprendizado" id="aprendizado" value="0.3">
+                                        <input class="form-control text-center" type="number" name="aprendizado" id="aprendizado" value="0.5">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="momentum">Momentum</label>
-                                        <input class="form-control text-center" type="number" name="momentum" id="momentum" value="0.9">
+                                        <input class="form-control text-center" type="number" name="momentum" id="momentum" value="1">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="iteracoes">Iterações</label>
-                                        <input class="form-control text-center" type="text" name="iteracoes" id="iteracoes" value="100">
+                                        <input class="form-control text-center" type="text" name="iteracoes" id="iteracoes" value="1000">
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-primary float-right text-white" id="train">
+                        <button class="btn btn-primary float-right text-white" id="train">
                             TREINAR
-                        </a>
-                        <p id="load-treinando"><b>TREINANDO ...</b></p>
+                        </button>
+                        <p id="train-load"><b>TREINANDO ...</b></p>
                     </div>
                 </div>
             </div>
@@ -99,35 +99,23 @@
                         <b>Teste</b>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="treinamento">Selecione o Treinamento</label>
-                                    <select name="treinamento" id="treinamento" class="form-control">
-                                        <option value=""></option>
-                                        <option value="">teste.json</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col">
                                 <p>Arquivo de Teste</p>
-                                <label for="tfile" style="width: 100%;">
+                                <label for="test-file" style="width: 100%;">
                                     <a class="btn btn-success btn-block text-white">
                                         SELECIONAR ARQUIVO
                                     </a>
                                 </label>
-                                <input style="visibility: hidden;" type="file" name="tfile" id="tfile" accept="*.json" />
+                                <input style="display: none;" type="file" name="tfile" id="test-file" accept="*.json" />
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-primary float-right text-white">
-                            Testar
-                        </a>
-                        <p><b>TESTANDO ...</b></p>
+                        <button class="btn btn-primary float-right text-white" id="test">
+                            TESTAR
+                        </button>
+                        <p id="test-load"><b>TESTANDO ...</b></p>
                     </div>
                 </div>
             </div>
@@ -143,13 +131,24 @@
                     <div class="card-body">
                         <div class="row text-center mb-3">
                             <div class="col">
-                                <p><b>Taxa de Acerto</b></p>
-                                <h3>98.99%</h3>
+                                <p><b>Acurácia</b></p>
+                                <h3 id="acuracy"></h3>
+                            </div>
+                            <div class="col">
+                                <p><b>Erro</b></p>
+                                <h3 id="error"></h3>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col" id="matriz">
+
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-5">
+                            <div class="col" id="tabela">
 
                             </div>
                         </div>
