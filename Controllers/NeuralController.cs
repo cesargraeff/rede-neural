@@ -65,13 +65,13 @@ namespace neuralnetwork.Controllers
             Stream stream = new FileStream(file, FileMode.Create, FileAccess.Write);
             formatter.Serialize(stream, rn);
             stream.Close();
-            
+
         }
 
 
 
         [HttpPost("test")]
-        public void Test(
+        public int Test(
             [FromBody] InputModel[] dataset
         )
         {
@@ -113,6 +113,7 @@ namespace neuralnetwork.Controllers
             var rn = (NeuralNetwork)formatter.Deserialize(stream);
             stream.Close();
 
+            int cont = 0;
 
             for (int i = 0; i < nData; i++)
             {
@@ -120,25 +121,33 @@ namespace neuralnetwork.Controllers
                 double[] output = rn.test(input[i]);
 
 
-                Console.WriteLine("LETRA: "+dataset[i].letter);
+                Console.WriteLine("LETRA: " + dataset[i].letter);
                 Console.Write("ESP: ");
+                string esp = "";
                 for (int j = 0; j < nOutput; j++)
                 {
-                    Console.Write(expected[i][j].ToString());
+                    esp += expected[i][j].ToString();
                 }
-                Console.WriteLine();
+                Console.WriteLine(esp);
 
 
                 Console.Write("RES: ");
+                string res = "";
                 for (int j = 0; j < nOutput; j++)
                 {
-                    Console.Write(output[j] >= 0.5 ? "1" : "0");
+                    res += output[j] >= 0.5 ? "1" : "0";
                 }
+                Console.WriteLine(res);
                 Console.WriteLine();
-                Console.WriteLine();
-            }
-        }
 
+                if (String.Equals(res, esp))
+                {
+                    cont++;
+                }
+            }
+
+            return cont;
+        }
 
     }
 }

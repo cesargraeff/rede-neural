@@ -27,6 +27,8 @@ namespace neuralnetwork
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(option => option.AllowAnyOrigin());;
+
             app.UseRouting();
 
             app.UseAuthorization();
